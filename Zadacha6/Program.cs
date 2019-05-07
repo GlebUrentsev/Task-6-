@@ -8,6 +8,8 @@ namespace Zadacha6
 {
     class Program
     {
+        static bool okey = false; // неубывающаяя/возрастает,если false
+        static bool neMonoton = true;
         static void printMas(double[] array)//метод для печати элементов последовательности
         {
             for (int i = 0; i < array.Length; i++)
@@ -15,30 +17,43 @@ namespace Zadacha6
                 Console.WriteLine($"{i + 1} элемент последовательности равен " + array[i]);
             }
         } // печать последовательности
-        static bool checkMas(double[] array)// выбираем нечётные элементы из последовательности и проверяем на монотонность
-        {
-            bool okey = false;
-            double[] massiv = new double[array.Length];
+        static void checkMas(double[] array)// выбираем нечётные элементы из последовательности и проверяем на монотонность
+        {         
+            int masLength=0;
             for (int i = 1; i < array.Length + 1; i++)
             {
-                if (i % 2 != 0) massiv[i - 1] = array[i - 1];
+                if (i % 2 != 0)
+                {
+                    masLength++;
+                }
                 else continue;
             }
-            array = massiv.Where(x => x != 0).ToArray();
-            for (int i = 0; i < array.Length;)
+            double[] massiv = new double[masLength];
+            int b = 0;
+            for (int i = 1; i < array.Length + 1; i++)
             {
-                if (array[i] < array[i + 1])
+                if (i % 2 != 0)
                 {
-                    okey = true;
-                    break;
+                    //massiv[i - 1] = array[i - 1];
+                    massiv[b] = array[i-1];
+                    b++;
                 }
-                else
-                {
-                    okey = false;
-                    break;
-                }
+                else continue;
             }
-            return okey;
+            for(int i=1;i<massiv.Length;i++)
+            {
+                if (massiv[i-1]<massiv[i])
+                {
+                    okey = false;// возрастает
+                    neMonoton = false;
+                }
+                else if (massiv[i - 1] > massiv[i])
+                {
+                    okey = true;// убывает
+                    neMonoton = false;
+                }
+                else neMonoton = true;
+            }
         } //проверка на монотонность
         static void Main(string[] args)
         {
@@ -55,9 +70,11 @@ namespace Zadacha6
             {
                 mas[i] = 0.7 * mas[i - 1] - 0.2 * mas[i - 2] + i * mas[i - 3];// массив последовательности
             }
+            checkMas(mas);         
             printMas(mas);
-            if (checkMas(mas) == true) Console.WriteLine("Неубывающая");
-            else Console.WriteLine("Убывающая");
+            if (okey == false && neMonoton == false) Console.WriteLine("Монотонная неубывающая (возрастает)");
+            else if (okey == true && neMonoton == false)  Console.WriteLine("Монотонная убывающая (убывает)");
+            else Console.WriteLine("Не монотонная");
         }
     }
 }
