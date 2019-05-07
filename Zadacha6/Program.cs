@@ -19,16 +19,15 @@ namespace Zadacha6
         {
             bool okey = false;
             double[] massiv = new double[array.Length];
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 1; i < array.Length + 1; i++)
             {
-                if (i % 2 != 0) massiv[i] = array[i];
+                if (i % 2 != 0) massiv[i - 1] = array[i - 1];
                 else continue;
             }
-            massiv = massiv.Where(x => x != 0).ToArray();
-            for (int i = 0; i < massiv.Length;)
+            array = massiv.Where(x => x != 0).ToArray();
+            for (int i = 0; i < array.Length;)
             {
-                Console.WriteLine(massiv[i]);
-                if (massiv[i] < massiv[i + 1])
+                if (array[i] < array[i + 1])
                 {
                     okey = true;
                     break;
@@ -40,7 +39,7 @@ namespace Zadacha6
                 }
             }
             return okey;
-         } //проверка на монотонность
+        } //проверка на монотонность
         static void Main(string[] args)
         {
             int a1, a2, a3, N;
@@ -52,9 +51,9 @@ namespace Zadacha6
             mas[0] = a1;
             mas[1] = a2;
             mas[2] = a3;
-            for(int i = 3;i<N;i++)
+            for (int i = 3; i < N; i++)
             {
-                mas[i] = 0.7 * mas[i - 1] - 0.2 * mas[i - 2] + i *mas[i - 3];// массив последовательности
+                mas[i] = 0.7 * mas[i - 1] - 0.2 * mas[i - 2] + i * mas[i - 3];// массив последовательности
             }
             printMas(mas);
             if (checkMas(mas) == true) Console.WriteLine("Неубывающая");
