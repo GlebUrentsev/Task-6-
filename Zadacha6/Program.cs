@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -79,7 +80,7 @@ namespace Zadacha6
                 mas[0] = a1;
                 mas[1] = a2;
                 mas[2] = a3;
-                //for (int i = 3; i < N; i++)
+                //for (int i = 3; i < N; i++) //без рекурсии
                 //{
                 //    mas[i] = 0.7 * mas[i - 1] - 0.2 * mas[i - 2] + i * mas[i - 3];// массив последовательности
                 //}
